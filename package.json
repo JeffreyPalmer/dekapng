@@ -1,38 +1,33 @@
 {
   "name": "dekapng",
   "version": "1.1.0",
-  "main": "dist/dekapng.js",
+  "main": "./dist/index.js",
+  "module": "./esm/index.js",
   "description": "Library to make giant PNGs in browser",
-  "module": "lib/src/index.js",
-  "types": "lib/src/index.d.ts",
+  "types": "./dist/index.d.ts",
   "license": "MIT",
   "devDependencies": {
-    "@types/expect": "^1.20.1",
-    "@types/mocha": "^2.2.41",
-    "@types/node": "^7.0.14",
+    "@types/pngjs": "^6.0.1",
     "adler32": "^0.1.7",
     "base64-js": "^1.2.0",
-    "expect": "^1.20.2",
-    "html-webpack-plugin": "^2.28.0",
+    "expect": "29.0.2",
     "jsdoc": "^3.4.3",
-    "mocha": "^3.3.0",
-    "mocha-typescript": "^1.1.0",
-    "pngjs": "^3.2.0",
-    "ts-loader": "^2.0.3",
-    "typedoc": "^0.7.1",
-    "typescript": "^2.9.2",
-    "webpack": "^2.4.1",
-    "webpack-dev-server": "^2.4.5"
+    "mocha": "^10.0.0",
+    "mocha-typescript": "^1.1.17",
+    "pngjs": "6.0.0",
+    "typedoc": "0.23.14",
+    "typescript": "4.8.3"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/greggman/dekapng.git"
+    "url": "https://github.com/JeffreyPalmer/dekapng.git"
   },
   "keywords": [
     "png"
   ],
   "files": [
-    "dist/dekapng.js"
+    "./dist/**/*",
+    "./esm/**/*"
   ],
   "author": "Greggman",
   "bugs": {
@@ -40,9 +35,10 @@
   },
   "homepage": "https://github.com/greggman/dekapng",
   "scripts": {
-    "build": "webpack",
-    "tests-node": "mocha-typescript-watch -o mocha.opts",
-    "demo": "webpack-dev-server './demo/demo.ts' --module-bind ts=ts-loader --output-filename test.js --plugin html-webpack-plugin --resolve-extensions '.js,.ts,.json' --no-inline --devtool source-map",
-    "generate-docs": "typedoc --out docs --mode file --excludeExternals --excludePrivate --exclude 'test/**' ./src/index.ts"
-  }
+    "build": "$npm_execpath run build-commonjs && $npm_execpath run build-esm",
+    "build-commonjs": "tsc --module commonjs --outDir dist",
+    "build-esm": "tsc --module esnext --outDir esm",
+    "tests-node": "mocha-typescript-watch -o mocha.opts"
+  },
+  "dependencies": {}
 }
